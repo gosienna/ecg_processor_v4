@@ -379,6 +379,7 @@ document.getElementById('save').addEventListener('click',function(){
     let head=0
     let tail=0
     let seg_id=0
+    let seg='null'
     for(let t = 0; t < ecg_data.lead_I.length; t++){ //t here represent one time step
         canvas_ID_list.forEach(function(ID){
             result += ecg_data[ID][t] 
@@ -391,10 +392,11 @@ document.getElementById('save').addEventListener('click',function(){
             tail = seg_info[i][1]
             if( t >= head && t<=tail){  // if this time step is within a segment then mark the peak type information
                 peak_type = seg_info[i][2]
+                seg = seg_id
                 break
             }else{
                 peak_type = 'null'
-                seg_id = 'null'
+                seg = 'null'
             }
             
 
@@ -404,11 +406,11 @@ document.getElementById('save').addEventListener('click',function(){
         result += ','
         result += peak_type
         result += ','
-        result += seg_id
+        result += seg
         result += ','
         result += location
         result += '\r\n'
-        if(seg_id != 'null'){
+        if(seg != 'null'){
             seg_id += 1
         }
     } 
