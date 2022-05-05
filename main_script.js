@@ -27,7 +27,7 @@ let file_name = ''
 let seg_info=[]
 let seg_head=0
 let seg_tail=0
-
+let seg_count=0
 //array to collect labling information
 let IDs=[]
 let lables=[]
@@ -225,7 +225,8 @@ function init_ecg(ecg_data){
             }else{
                 seg_tail=parseInt((Plot2D_obj.camera.right-Plot2D_obj.camera.left)*((event.clientX-rect.left)/800) + Plot2D_obj.camera.left )
                 let wave_type=document.getElementById('wave_type').value
-                seg_info.push([seg_head,seg_tail,wave_type])
+                seg_info.push([seg_head,seg_tail,wave_type,seg_count])
+                seg_count+=1
                 //console.log(wave_type)  
                 //console.log(seg_info)
                 canvas_obj_list.forEach(function(Plot2D_obj){
@@ -379,7 +380,6 @@ document.getElementById('save').addEventListener('click',function(){
     let head=0
     let tail=0
     let seg_id=0
-    let seg='null'
     for(let t = 0; t < ecg_data.lead_I.length; t++){ //t here represent one time step
         canvas_ID_list.forEach(function(ID){
             result += ecg_data[ID][t] 
@@ -392,11 +392,11 @@ document.getElementById('save').addEventListener('click',function(){
             tail = seg_info[i][1]
             if( t >= head && t<=tail){  // if this time step is within a segment then mark the peak type information
                 peak_type = seg_info[i][2]
-                seg = seg_id
+                seg_id = seg_info[i][3]
                 break
             }else{
                 peak_type = 'null'
-                seg = 'null'
+                seg_id = 'null'
             }
             
 
@@ -406,13 +406,11 @@ document.getElementById('save').addEventListener('click',function(){
         result += ','
         result += peak_type
         result += ','
-        result += seg
+        result += seg_id
         result += ','
         result += location
         result += '\r\n'
-        if(seg != 'null'){
-            seg_id += 1
-        }
+        
     } 
 
     //download file
