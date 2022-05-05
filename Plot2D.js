@@ -57,6 +57,7 @@ class Plot2D{
     }
     
     draw_data(data){
+        this.data = data
         //create a blue LineBasicMaterial
         const material = new THREE.LineBasicMaterial( { color: 0x2e70ff } );
         const points = []
