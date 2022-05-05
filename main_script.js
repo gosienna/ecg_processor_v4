@@ -372,13 +372,13 @@ document.getElementById('save').addEventListener('click',function(){
     let location = lables[index_lable]
     //console.log(ID,location)
     //initialize header of the .csv file
-    let result = 'I,II,III,aVR,aVL,aVF,V1,V2,V3,V4,V5,V6,ID,peak type,location\n'
+    let result = 'I,II,III,aVR,aVL,aVF,V1,V2,V3,V4,V5,V6,ID,peak_type,seg_id,location\n'
     //save all segment result into one .csv file
     console.log(seg_info)
     let peak_type='null'
     let head=0
     let tail=0
-
+    let seg_id=0
     for(let t = 0; t < ecg_data.lead_I.length; t++){ //t here represent one time step
         canvas_ID_list.forEach(function(ID){
             result += ecg_data[ID][t] 
@@ -394,6 +394,7 @@ document.getElementById('save').addEventListener('click',function(){
                 break
             }else{
                 peak_type = 'null'
+                seg_id = 'null'
             }
             
 
@@ -403,8 +404,13 @@ document.getElementById('save').addEventListener('click',function(){
         result += ','
         result += peak_type
         result += ','
+        result += seg_id
+        result += ','
         result += location
         result += '\r\n'
+        if(seg_id != 'null'){
+            seg_id += 1
+        }
     } 
 
     //download file
