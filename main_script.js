@@ -272,6 +272,7 @@ function redraw_ecg(ecg_data){
     
     canvas_obj_list.forEach(function(obj){
         let ecg = ecg_data[obj.canvasID]
+        seg_count=0
         obj.clear_data()
         obj.ymax = Math.max(...ecg)
         obj.ymin = Math.min(...ecg)
